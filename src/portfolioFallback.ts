@@ -14,7 +14,7 @@ export const portfolioFallback: Portfolio = {
     intro: "Hey, I'm",
     name: "Emmanuel",
     title:
-      "a Front-End Web Developer, An Aspiring Software Engineer and also a Code Poet.",
+      "a Web Developer, and also a Code Poet.",
     subtitle: "I develop responsive website where technologies meet creativity.",
     image: `${assetBase}/images/zecttor001.jpeg`,
     cta: {
@@ -31,7 +31,7 @@ export const portfolioFallback: Portfolio = {
     greeting: "Hello, I'm Emmanuel",
     image: `${assetBase}/images/about.png`,
     paragraphs: [
-      "I'm a front-end developer based in Abeokuta, Ogun State, Nigeria. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences. My skill set includes HTML, CSS, JavaScript, Django, and C-language.",
+      "I'm a Web developer based in Abeokuta, Ogun State, Nigeria. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences. My skill set includes Python, CSS, JavaScript, React, Typescript.",
       "Transforming my creativity and knowledge into websites has been my passion for over a year. I always strive to learn about the newest Technologies and Frameworks, and I also aspire to becoming a Full-Stack Web Developer. My hobbies are writing code, playing chess, basketball and video games."
     ]
   },
@@ -93,7 +93,7 @@ export const portfolioFallback: Portfolio = {
     }
   ],
   footer: {
-    copyright: "2025 Zector. All rights reserved.",
+    copyright: "2026 Zector. All rights reserved.",
     note: "Crafted with passion and a touch of chaos"
   }
 };
