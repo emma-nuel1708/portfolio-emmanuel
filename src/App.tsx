@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUp,
   Code2,
@@ -19,6 +19,8 @@ const socialIcons = {
   LinkedIn: Linkedin
 };
 
+const SUCCESS_MESSAGE = "Message sent successfully. I'll get back to you soon.";
+
 function App() {
   const [portfolio, setPortfolio] = useState<Portfolio>(portfolioFallback);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,6 +30,8 @@ function App() {
     type: "idle" | "loading" | "success" | "error";
     message: string;
   }>({ type: "idle", message: "" });
+  const [celebrationVisible, setCelebrationVisible] = useState(false);
+  const celebrationTimeout = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     fetch("/api/portfolio")
@@ -70,6 +74,14 @@ function App() {
     return () => observer.disconnect();
   }, [portfolio.projects]);
 
+  useEffect(() => {
+    return () => {
+      if (celebrationTimeout.current) {
+        window.clearTimeout(celebrationTimeout.current);
+      }
+    };
+  }, []);
+
   const projectRows = useMemo(() => {
     const rows: Project[][] = [];
     for (let index = 0; index < portfolio.projects.length; index += 2) {
@@ -103,8 +115,15 @@ function App() {
 
       setFormStatus({
         type: "success",
-        message: payload.message || "Message sent successfully!"
+        message: SUCCESS_MESSAGE
       });
+      setCelebrationVisible(true);
+      if (celebrationTimeout.current) {
+        window.clearTimeout(celebrationTimeout.current);
+      }
+      celebrationTimeout.current = window.setTimeout(() => {
+        setCelebrationVisible(false);
+      }, 3800);
       form.reset();
     } catch (error) {
       setFormStatus({
@@ -121,6 +140,7 @@ function App() {
     <>
       <MotionBackground />
       <CursorMotion />
+      {celebrationVisible && <CelebrationOverlay />}
 
       <header className={`site-header ${isSticky ? "sticky" : ""}`}>
         <a className="logo" href="#home" onClick={() => setMenuOpen(false)}>
@@ -158,11 +178,11 @@ function App() {
           <div className="hero-text">
             <p className="hero-kicker">
               <span aria-hidden="true" />
-              Available for creative frontend builds
+              Available for creative web builds
             </p>
             <h1 id="hero-heading">
               {portfolio.hero.intro} <span>{portfolio.hero.name}</span>,{" "}
-              a Front-End Web Developer, An Aspiring <span>Software Engineer</span>{" "}
+              a Web Developer, An Aspiring <span>Software Engineer</span>{" "}
               and also a <span>Code Poet.</span>
             </h1>
             <p>{portfolio.hero.subtitle}</p>
@@ -298,6 +318,25 @@ function App() {
         <p>{portfolio.footer.note}</p>
       </footer>
     </>
+  );
+}
+
+function CelebrationOverlay() {
+  const confetti = Array.from({ length: 18 }, (_, index) => index);
+
+  return (
+    <div className="celebration-overlay" role="status" aria-live="polite">
+      <div className="celebration-confetti" aria-hidden="true">
+        {confetti.map((piece) => (
+          <span key={piece} className={`confetti-piece confetti-${piece + 1}`} />
+        ))}
+      </div>
+      <div className="celebration-card">
+        <span className="celebration-check" aria-hidden="true" />
+        <p>Message sent successfully</p>
+        <small>I'll get back to you soon.</small>
+      </div>
+    </div>
   );
 }
 

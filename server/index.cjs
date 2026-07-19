@@ -53,14 +53,14 @@ app.post("/api/contact", async (req, res) => {
       return res.status(201).json({
         ok: true,
         destination: "google-sheet",
-        message: "Message sent to Google Sheet!"
+        message: "Message sent successfully. I'll get back to you soon."
       });
     }
 
     res.status(201).json({
       ok: true,
       destination: "local-file",
-      message: "Message saved locally. Add GOOGLE_SHEET_WEBHOOK_URL to send it to Google Sheets."
+      message: "Message sent successfully. I'll get back to you soon."
     });
   } catch (error) {
     console.error("Unable to save contact submission", error);
