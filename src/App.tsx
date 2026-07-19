@@ -20,6 +20,7 @@ const socialIcons = {
 };
 
 const SUCCESS_MESSAGE = "Message sent successfully. I'll get back to you soon.";
+const ERROR_MESSAGE = "Unable to send the message right now.";
 
 function App() {
   const [portfolio, setPortfolio] = useState<Portfolio>(portfolioFallback);
@@ -108,9 +109,9 @@ function App() {
         })
       });
 
-      const payload = await response.json();
+      const payload = await readResponseJson(response);
       if (!response.ok) {
-        throw new Error(payload.error || "Unable to send message.");
+        throw new Error(payload?.error || ERROR_MESSAGE);
       }
 
       setFormStatus({
@@ -319,6 +320,19 @@ function App() {
       </footer>
     </>
   );
+}
+
+async function readResponseJson(response: Response) {
+  const text = await response.text();
+  if (!text.trim()) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
 }
 
 function CelebrationOverlay() {

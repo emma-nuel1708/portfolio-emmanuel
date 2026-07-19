@@ -282,7 +282,7 @@ footer,
   align-items: center;
   justify-content: space-between;
   width: min(80%, 1120px);
-  margin: 0 auto 70px;
+  margin: 10px auto 70px;
   padding: 18px 20px;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -301,7 +301,7 @@ footer,
   left: 0;
   width: min(90%, 1180px);
   top: 0;
-  margin: 0 auto;
+  margin: 10px auto 0;
   border-color: var(--line);
   background: rgb(17 17 17 / 68%);
   box-shadow: 0 18px 60px rgb(0 0 0 / 30%);
@@ -1484,6 +1484,7 @@ footer p {
     width: calc(100vw - 20px);
     max-width: calc(100vw - 20px);
     margin-bottom: 44px;
+    margin-top: 10px;
     padding: 12px 14px;
     border-color: var(--line);
     background: rgb(17 17 17 / 68%);

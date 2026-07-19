@@ -46,16 +46,20 @@ app.post("/api/contact", async (req, res) => {
   };
 
   try {
-    await saveLocalBackup(submission);
-
     if (googleSheetWebhookUrl) {
       await sendToGoogleSheet(submission);
+      await saveLocalBackup(submission).catch((error) => {
+        console.warn("Contact was sent, but local backup failed", error);
+      });
+
       return res.status(201).json({
         ok: true,
         destination: "google-sheet",
         message: "Message sent successfully. I'll get back to you soon."
       });
     }
+
+    await saveLocalBackup(submission);
 
     res.status(201).json({
       ok: true,
